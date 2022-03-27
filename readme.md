@@ -10,6 +10,7 @@ The following folder structure is available for your use.
     │   │   ├── adder.c
     │   │   ├── adder.h
     │   │   └── CMakeLists.txt
+    │   ├── googletest          # google test submodule added from github
     │   └── CMakeLists.txt
     ├── scripts                 # Tools and shell scripts
     │   ├── include.sh
