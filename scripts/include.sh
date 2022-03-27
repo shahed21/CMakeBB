@@ -3,7 +3,9 @@
 
 full_path=$(realpath $0)
 
-dir_path=$(dirname $full_path)
+shell_path=$(dirname $full_path)
+
+dir_path=$(dirname $shell_path)
 
 #Set this to the root directory
 ROOTDIR=$dir_path
