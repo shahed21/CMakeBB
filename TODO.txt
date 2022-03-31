@@ -1,4 +1,3 @@
-Google test Use Findlibrary instead of submodules
 Version Numbers
 Make install
 make adder optional
