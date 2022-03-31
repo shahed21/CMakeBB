@@ -7,10 +7,9 @@ The following folder structure is available for your use.
     .
     ├── lib                     # Library files
     │   ├── adder               # Placeholder library source code folder
-    │   │   ├── adder.c
+    │   │   ├── adder.cpp
     │   │   ├── adder.h
     │   │   └── CMakeLists.txt
-    │   ├── googletest          # google test submodule added from github
     │   └── CMakeLists.txt
     ├── scripts                 # Tools and shell scripts
     │   ├── include.sh
@@ -18,11 +17,12 @@ The following folder structure is available for your use.
     │   ├── build.sh
     │   └── execute.sh
     ├── src                     # Source files
-    │   ├── main.c
+    │   ├── AdderTests.cpp
     │   └── CMakeLists.txt
     ├── test                    # Automated tests
     ├── .gitignore
     ├── CMakeLists.txt
+    ├── TODO.txt
     └── readme.md
 
 The following top level folder structure is generated after code is compiled.
