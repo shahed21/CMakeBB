@@ -1,8 +1,16 @@
 cmake_minimum_required(VERSION 3.16.3)
-project(SampleLib C CXX)
+project(SampleLib 
+    VERSION 0.1.0
+    LANGUAGES C CXX)
 
 # GoogleTest requires at least C++11
 set(CMAKE_CXX_STANDARD 11)
+
+configure_file(
+    src/config.h.in 
+    src/config.h
+)
+
 
 include(FetchContent)
 FetchContent_Declare(
@@ -21,13 +29,12 @@ add_executable(${PROJECT_NAME} src/SampleLibTests.cpp)
 add_subdirectory(lib)
 
 target_include_directories(${PROJECT_NAME} 
-    PUBLIC lib/samplelib
-#    PUBLIC lib/googletest/googletest/include
+    PUBLIC "${PROJECT_BINARY_DIR}/src/"
+    PUBLIC lib/samplelib/
 )
 
 target_link_directories(${PROJECT_NAME} 
     PRIVATE lib/samplelib
-#    PRIVATE lib
 )
 
 target_link_libraries(${PROJECT_NAME}
