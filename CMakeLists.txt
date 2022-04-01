@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16.3)
-project(CMakeBB C CXX)
+project(SampleLib C CXX)
 
 # GoogleTest requires at least C++11
 set(CMAKE_CXX_STANDARD 11)
@@ -16,22 +16,22 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
 FetchContent_MakeAvailable(googletest)
 
-add_executable(${PROJECT_NAME} src/AdderTests.cpp)
+add_executable(${PROJECT_NAME} src/SampleLibTests.cpp)
 
 add_subdirectory(lib)
 
 target_include_directories(${PROJECT_NAME} 
-    PUBLIC lib/adder
+    PUBLIC lib/samplelib
 #    PUBLIC lib/googletest/googletest/include
 )
 
 target_link_directories(${PROJECT_NAME} 
-    PRIVATE lib/adder
+    PRIVATE lib/samplelib
 #    PRIVATE lib
 )
 
 target_link_libraries(${PROJECT_NAME}
-    adder
+    samplelib
     gtest_main
 )
 

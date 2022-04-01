@@ -1,15 +1,15 @@
 //#include <stdio.h>
-#include <adder.h>
+#include <samplelib.h>
 #include <gtest/gtest.h>
 
-TEST(AdderTests, AdderNETest)
+TEST(SampleLibTests, SampleLibNETest)
 {
     int a=10;
     int b=20;
     ASSERT_NE(6, add(a,b));
 }
 
-TEST(AdderTests, AdderEQTest)
+TEST(SampleLibTests, SampleLibEQTest)
 {
     int a=10;
     int b=20;

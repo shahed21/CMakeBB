@@ -1,5 +1,5 @@
-#ifndef ADDER_H
-#define ADDER_H
+#ifndef SAMPLELIB_H
+#define SAMPLELIB_H
 
 /**
  * @brief fundtion declaration for add function that is to be tested
@@ -10,4 +10,4 @@
  */
 int add(int a, int b);
 
-#endif //ADDER_H
+#endif //SAMPLELIB_H

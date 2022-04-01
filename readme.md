@@ -6,9 +6,9 @@ The following folder structure is available for your use.
 
     .
     ├── lib                     # Library files
-    │   ├── adder               # Placeholder library source code folder
-    │   │   ├── adder.cpp
-    │   │   ├── adder.h
+    │   ├── samplelib           # Placeholder library source code folder
+    │   │   ├── samplelib.cpp
+    │   │   ├── samplelib.h
     │   │   └── CMakeLists.txt
     │   └── CMakeLists.txt
     ├── scripts                 # Tools and shell scripts
@@ -17,7 +17,7 @@ The following folder structure is available for your use.
     │   ├── build.sh
     │   └── execute.sh
     ├── src                     # Source files
-    │   ├── AdderTests.cpp
+    │   ├── SampleLibTests.cpp
     │   └── CMakeLists.txt
     ├── test                    # Automated tests
     ├── .gitignore
@@ -47,7 +47,7 @@ The project name needs to be renamed.
 Old Git has to be removed. Git has to be reinitialized with new Project Name.
 
 ### Libraries
-The `adder` library has to be replaced with new project libraries.
+The `samplelib` library has to be replaced with new project libraries.
 
 ## Commands
 ### Configure CMake
