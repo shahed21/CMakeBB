@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16.3)
-project(SampleLib 
+project(SampleExeWithLib 
     VERSION 0.1.0
     LANGUAGES C CXX)
 
@@ -7,8 +7,8 @@ project(SampleLib
 set(CMAKE_CXX_STANDARD 11)
 
 configure_file(
-    src/config.h.in 
-    src/config.h
+    inc/config.h.in 
+    inc/config.h
 )
 
 
@@ -24,21 +24,21 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
 FetchContent_MakeAvailable(googletest)
 
-add_executable(${PROJECT_NAME} src/SampleLibTests.cpp)
+add_executable(${PROJECT_NAME} tests/sampleadder_tests.cpp)
 
 add_subdirectory(lib)
 
 target_include_directories(${PROJECT_NAME} 
-    PUBLIC "${PROJECT_BINARY_DIR}/src/"
-    PUBLIC lib/samplelib/
+    PUBLIC "${PROJECT_BINARY_DIR}/inc/"
+    PUBLIC lib/sampleadder/
 )
 
 target_link_directories(${PROJECT_NAME} 
-    PRIVATE lib/samplelib
+    PRIVATE lib/sampleadder
 )
 
 target_link_libraries(${PROJECT_NAME}
-    samplelib
+    sampleadder
     gtest_main
 )
 

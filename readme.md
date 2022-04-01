@@ -6,9 +6,9 @@ The following folder structure is available for your use.
 
     .
     ├── lib                     # Library files
-    │   ├── samplelib           # Placeholder library source code folder
-    │   │   ├── samplelib.cpp
-    │   │   ├── samplelib.h
+    │   ├── sampleadder           # Placeholder library source code folder
+    │   │   ├── sampleadder.cpp
+    │   │   ├── sampleadder.h
     │   │   └── CMakeLists.txt
     │   └── CMakeLists.txt
     ├── scripts                 # Tools and shell scripts
@@ -16,10 +16,11 @@ The following folder structure is available for your use.
     │   ├── configure.sh
     │   ├── build.sh
     │   └── execute.sh
-    ├── src                     # Source files
-    │   ├── SampleLibTests.cpp
+    ├── tests                   # Automated tests
+    │   ├── sampleadder_tests.cpp
     │   └── CMakeLists.txt
-    ├── test                    # Automated tests
+    ├── inc                    # config include folder
+    │   └── config.h.in
     ├── .gitignore
     ├── CMakeLists.txt
     ├── TODO.txt
@@ -31,8 +32,8 @@ The following top level folder structure is generated after code is compiled.
     ├── build                   # Compiled files
     ├── lib                     # Library files
     ├── scripts                 # Tools and utilities
-    ├── src                     # Source files
-    ├── test                    # Automated tests
+    ├── inc                     # Config include folder
+    ├── tests                   # Automated tests
     ├── .gitignore
     ├── CMakeLists.txt
     └── readme.md
@@ -47,7 +48,7 @@ The project name needs to be renamed.
 Old Git has to be removed. Git has to be reinitialized with new Project Name.
 
 ### Libraries
-The `samplelib` library has to be replaced with new project libraries.
+The `sampleadder` library has to be replaced with new project libraries.
 
 ## Commands
 ### Configure CMake
