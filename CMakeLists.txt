@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.16.3)
 project(SampleExeWithLib 
     VERSION 0.1.0
-    LANGUAGES C CXX)
+    LANGUAGES C CXX
+)
 
 # GoogleTest requires at least C++11
 set(CMAKE_CXX_STANDARD 11)
@@ -27,6 +28,7 @@ FetchContent_MakeAvailable(googletest)
 
 option(ENABLE_SAMPLE_BUILD "Sample Libraries Enabled." ON)
 option(ENABLE_SAMPLE_ADDER_BUILD "Sample Adder Libraries Enabled." ON)
+option(ENABLE_SAMPLE_COMBINATORICS_BUILD "Sample Combinatorics Libraries Enabled." ON)
 
 if(ENABLE_SAMPLE_BUILD)
     if(ENABLE_SAMPLE_ADDER_BUILD)
@@ -34,6 +36,12 @@ if(ENABLE_SAMPLE_BUILD)
         list(APPEND SAMPLE_LINK_DIRS lib/sampleadder/)
         list(APPEND SAMPLE_LINK_LIBS sampleadder)
         list(APPEND TEST_EXECUTABLES tests/sampleadder_tests.cpp)
+    endif()
+    if(ENABLE_SAMPLE_COMBINATORICS_BUILD)
+        list(APPEND SAMPLE_INC_DIRS lib/samplecombinatorics/)
+        list(APPEND SAMPLE_LINK_DIRS lib/samplecombinatorics/)
+        list(APPEND SAMPLE_LINK_LIBS samplecombinatorics)
+        list(APPEND TEST_EXECUTABLES tests/samplecombinatorics_tests.cpp)
     endif()
 endif()
 
