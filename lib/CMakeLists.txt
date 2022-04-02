@@ -1,3 +1,7 @@
 cmake_minimum_required(VERSION 3.16.3)
 
-add_subdirectory(sampleadder)
+if(ENABLE_SAMPLE_BUILD)
+    if(ENABLE_SAMPLE_ADDER_BUILD)
+        add_subdirectory(sampleadder)
+    endif()
+endif()

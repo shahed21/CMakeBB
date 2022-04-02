@@ -24,23 +24,44 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
 FetchContent_MakeAvailable(googletest)
 
-add_executable(${PROJECT_NAME} tests/sampleadder_tests.cpp)
 
-add_subdirectory(lib)
+option(ENABLE_SAMPLE_BUILD "Sample Libraries Enabled." ON)
+option(ENABLE_SAMPLE_ADDER_BUILD "Sample Adder Libraries Enabled." ON)
 
-target_include_directories(${PROJECT_NAME} 
-    PUBLIC "${PROJECT_BINARY_DIR}/inc/"
-    PUBLIC lib/sampleadder/
-)
+if(ENABLE_SAMPLE_BUILD)
+    if(ENABLE_SAMPLE_ADDER_BUILD)
+        list(APPEND SAMPLE_INC_DIRS lib/sampleadder/)
+        list(APPEND SAMPLE_LINK_DIRS lib/sampleadder/)
+        list(APPEND SAMPLE_LINK_LIBS sampleadder)
+        list(APPEND TEST_EXECUTABLES tests/sampleadder_tests.cpp)
+    endif()
+endif()
 
-target_link_directories(${PROJECT_NAME} 
-    PRIVATE lib/sampleadder
-)
+if(TEST_EXECUTABLES)
+    add_executable(${PROJECT_NAME}
+        ${TEST_EXECUTABLES}
+    )
 
-target_link_libraries(${PROJECT_NAME}
-    sampleadder
-    gtest_main
-)
+    add_subdirectory(lib)
 
-include(GoogleTest)
-gtest_discover_tests(${PROJECT_NAME})
+    target_include_directories(${PROJECT_NAME} 
+        PUBLIC "${PROJECT_BINARY_DIR}/inc/"
+        ${SAMPLE_INC_DIRS}
+    )
+
+    target_link_directories(${PROJECT_NAME} 
+    #    PRIVATE lib/sampleadder
+        PRIVATE ${SAMPLE_LINK_DIRS}
+    )
+
+    target_link_libraries(${PROJECT_NAME}
+    #    sampleadder
+        ${SAMPLE_LINK_LIBS}
+        gtest_main
+    )
+
+    include(GoogleTest)
+    gtest_discover_tests(${PROJECT_NAME})
+else()
+    message("No tests found.  Test executable was not built.")
+endif()

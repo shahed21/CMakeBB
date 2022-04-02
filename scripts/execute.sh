@@ -4,5 +4,5 @@
 source include.sh
 
 cd $BUILDDIR/
-./CMakeBB
+./SampleExeWithLib
 cd $ROOTDIR/
