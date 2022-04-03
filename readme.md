@@ -65,6 +65,12 @@ The following command, run in the `scripts/` folder, can be used to run tests to
 
     ./runtests.sh
 
+### Install Build
+The following command, run in the `scripts/` folder, can be used to install the project built executable and libraries to system accessible folders.  One needs system administrator access to run this command successfully.
+
+    ./install.sh
+
+
 ## What to change for your project
 The following items have to be changed to port this for a new project, or an existing one.
 
