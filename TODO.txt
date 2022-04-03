@@ -1,5 +1,1 @@
-Library Version File separation
-    Documentation
-Change Combinatorics functions
-    Write tests
-Make a Version Major Release Candidate (MRC)
+TODO Cleared

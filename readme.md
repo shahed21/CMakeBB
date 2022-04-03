@@ -9,23 +9,33 @@ The following folder structure is available for your use.
     │   ├── sampleadder             # Placeholder library source code folder
     │   │   ├── sampleadder.cpp
     │   │   ├── sampleadder.h
+    │   │   ├── sampleadderversion.cpp
+    │   │   ├── sampleadderversion.h
+    │   │   ├── readme.md
     │   │   └── CMakeLists.txt
     │   ├── samplecombinatorics     # Another placeholder library source code folder
     │   │   ├── samplecombinatorics.cpp
     │   │   ├── samplecombinatorics.h
+    │   │   ├── samplecombinatoricsversion.cpp
+    │   │   ├── samplecombinatoricsversion.h
+    │   │   ├── readme.md
     │   │   └── CMakeLists.txt
+    │   ├── readme.md
     │   └── CMakeLists.txt
     ├── scripts                     # Tools and shell scripts
     │   ├── include.sh
     │   ├── install.sh
     │   ├── configure.sh
     │   ├── build.sh
+    │   ├── readme.md
     │   └── execute.sh
     ├── tests                       # Automated tests
     │   ├── sampleadder_tests.cpp
     │   ├── samplecombinatorics_tests.cpp
+    │   ├── readme.md
     │   └── CMakeLists.txt
     ├── inc                         # config include folder
+    │   ├── readme.md
     │   └── config.h.in
     ├── .gitignore
     ├── CMakeLists.txt
@@ -173,7 +183,11 @@ The `lib` folder used to look like the following.
     │   ├── sampleadder             # Placeholder library source code folder
     │   │   ├── sampleadder.cpp
     │   │   ├── sampleadder.h
+    │   │   ├── sampleadderversion.cpp
+    │   │   ├── sampleadderversion.h
+    │   │   ├── readme.md
     │   │   └── CMakeLists.txt
+    │   ├── readme.md
     │   └── CMakeLists.txt
 
 But to add `samplecombinatorics` library we have to add the following files to the structure.
@@ -183,11 +197,18 @@ But to add `samplecombinatorics` library we have to add the following files to t
     │   ├── sampleadder             # Placeholder library source code folder
     │   │   ├── sampleadder.cpp
     │   │   ├── sampleadder.h
+    │   │   ├── sampleadderversion.cpp
+    │   │   ├── sampleadderversion.h
+    │   │   ├── readme.md
     │   │   └── CMakeLists.txt
     │   ├── samplecombinatorics     # Another placeholder library source code folder
     │   │   ├── samplecombinatorics.cpp
     │   │   ├── samplecombinatorics.h
+    │   │   ├── samplecombinatoricsversion.cpp
+    │   │   ├── samplecombinatoricsversion.h
+    │   │   ├── readme.md
     │   │   └── CMakeLists.txt
+    │   ├── readme.md
     │   └── CMakeLists.txt
 
 The `./lib/CMakeLists.txt` had the following code for `sampleadder` folder to be added.
@@ -254,25 +275,26 @@ We are just going to show `sampleadder` installation changes, as `samplecombinat
 
     if(ENABLE_SAMPLE_BUILD)
         if(ENABLE_SAMPLE_ADDER_BUILD)
-            add_library(sampleadder sampleadder.cpp)
+            add_library(sampleadder sampleadder.cpp sampleadderversion.cpp)
             target_include_directories(sampleadder
                 PUBLIC "${PROJECT_BINARY_DIR}/inc/"
             )
         endif()
     endif()
 
+
 After the installation changes for `sampleadder` library, the `./lib/sampleadder/CMakeLists.txt` file looks as follows.
 
     if(ENABLE_SAMPLE_BUILD)
         if(ENABLE_SAMPLE_ADDER_BUILD)
-            add_library(sampleadder sampleadder.cpp)
+            add_library(sampleadder sampleadder.cpp sampleadderversion.cpp)
             target_include_directories(sampleadder
                 PUBLIC "${PROJECT_BINARY_DIR}/inc/"
             )
             if(ENABLE_SAMPLE_ADDER_INSTALL)
                 install(TARGETS sampleadder
                     DESTINATION lib)
-                install(FILES sampleadder.h
+                install(FILES sampleadder.h sampleadderversion.h
                     DESTINATION include)
             endif()
         endif()
@@ -283,7 +305,7 @@ The change is in the code snippet that was added as below.
             if(ENABLE_SAMPLE_ADDER_INSTALL)
                 install(TARGETS sampleadder
                     DESTINATION lib)
-                install(FILES sampleadder.h
+                install(FILES sampleadder.h sampleadderversion.h
                     DESTINATION include)
             endif()
 
