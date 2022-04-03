@@ -6,5 +6,11 @@ if(ENABLE_SAMPLE_BUILD)
         target_include_directories(samplecombinatorics
             PUBLIC "${PROJECT_BINARY_DIR}/inc/"
         )
+        if(ENABLE_SAMPLE_COMBINATORICS_INSTALL)
+            install(TARGETS samplecombinatorics
+                DESTINATION lib)
+            install(FILES samplecombinatorics.h
+                DESTINATION include)
+        endif()
     endif()
 endif()

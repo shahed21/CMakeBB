@@ -6,5 +6,11 @@ if(ENABLE_SAMPLE_BUILD)
         target_include_directories(sampleadder
             PUBLIC "${PROJECT_BINARY_DIR}/inc/"
         )
+        if(ENABLE_SAMPLE_ADDER_INSTALL)
+            install(TARGETS sampleadder
+                DESTINATION lib)
+            install(FILES sampleadder.h
+                DESTINATION include)
+        endif()
     endif()
 endif()

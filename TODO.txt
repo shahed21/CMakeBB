@@ -1,3 +1,5 @@
-Version Numbers
-Make install
-make adder optional
+Library Version File separation
+    Documentation
+Change Combinatorics functions
+    Write tests
+Make a Version Major Release Candidate (MRC)

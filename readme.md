@@ -17,6 +17,7 @@ The following folder structure is available for your use.
     │   └── CMakeLists.txt
     ├── scripts                     # Tools and shell scripts
     │   ├── include.sh
+    │   ├── install.sh
     │   ├── configure.sh
     │   ├── build.sh
     │   └── execute.sh
@@ -68,7 +69,7 @@ The following command, run in the `scripts/` folder, can be used to run tests to
 The following items have to be changed to port this for a new project, or an existing one.
 
 ### Project Name and Version Number
-The project name needs to be renamed.  It has to be done in the `./CMakeLists.txt` file. `SampleExeWithLib` should be replaced with the new project / project executable name.  This is also where the version number is to be updated.  This version number get hardcoded into the library memory for better library version control.
+The project name needs to be renamed.  It has to be done in the `./CMakeLists.txt` file. `SampleExeWithLib` should be replaced with the new project / project executable name.  This is also where the version number is to be updated.  This version number gets hardcoded into the library memory for better library version control.
 
     project(SampleExeWithLib 
         VERSION 0.1.0
@@ -92,10 +93,10 @@ Old Git has to be removed. Git has to be reinitialized with new Project Name.  `
 
 
 ### Libraries
-The `sampleadder` library and `samplecombinatorics` library shows how libraries are organized in this project.  If this form is maintained new projects can be written as libraries and used in executables and tests.  All one has to do to adapt this is to add a new library and turn off the options to build the sample libraries.  This is covered in more detail in the next section titled `How to Add New Libraries`.
+The `sampleadder` library and the `samplecombinatorics` library show how libraries are organized in this project.  If this form is maintained new projects can be written as libraries and used in executables and tests.  All one has to do to adapt this is to add a new library and turn off the options to build the sample libraries.  This is covered in more detail in the next section titled `How to Add New Libraries`.
 
 ### Tests
-Whenever a new library is added, it should accompany corresponding self tests written in the `tests` folder.  The files `sampleadder_tests.cpp` and `samplecombinatorics_tests.cpp` provide good examples on how to proceed writing more such tests.
+Whenever a new library is added, it should accompany corresponding self tests written in the `./tests` folder.  The files `./tests/sampleadder_tests.cpp` and `./tests/samplecombinatorics_tests.cpp` provide good examples on how to proceed writing more such tests.
 
 ### CMakeLists.txt FIles
 And finally these cmake configuration files are definitely going to need some modifications to allow for any change.  More on this is covered in `How to Add New Libraries`.
@@ -229,3 +230,93 @@ Put the `samplecombinatorics` library source and header files in `./lib/sampleco
 
 ### Tests
 The `tests` folder already had the tests for `sampleadder` in the file `sampleadder_tests.cpp`.  We have to create the tests for the `samplecombinatorics` in the file called `./tests/samplecombinatorics_tests.cpp`.
+
+## Installation
+Installation of released software allows the executables, libraries and header files to be accessible system wide on the computer by the user.  In this section below we explain how CMake is used to install this project and its dependencies onto the system.
+
+### CMake Options
+Three CMake options were added for installation purposes.  They are listed and explained below.
+
+    option(ENABLE_SAMPLE_ADDER_INSTALL "Sample Adder Library Install Enabled." ON)
+    option(ENABLE_SAMPLE_COMBINATORICS_INSTALL "Sample Combinatorics Library Install Enabled." ON)
+    option(ENABLE_PROJECT_INSTALL "Project Install Enabled." ON)
+
+The first two are used for installing the libraries.  The last one is used to install project executables.  These are defined in `./CMakeLists.txt`.
+
+### Library Install Commands
+We are just going to show `sampleadder` installation changes, as `samplecombinatorics` has very similar changes.  The `./lib/sampleadder/CMakeLists.txt` before the update looked like this.
+
+    if(ENABLE_SAMPLE_BUILD)
+        if(ENABLE_SAMPLE_ADDER_BUILD)
+            add_library(sampleadder sampleadder.cpp)
+            target_include_directories(sampleadder
+                PUBLIC "${PROJECT_BINARY_DIR}/inc/"
+            )
+        endif()
+    endif()
+
+After the installation changes for `sampleadder` library, the `./lib/sampleadder/CMakeLists.txt` file looks as follows.
+
+    if(ENABLE_SAMPLE_BUILD)
+        if(ENABLE_SAMPLE_ADDER_BUILD)
+            add_library(sampleadder sampleadder.cpp)
+            target_include_directories(sampleadder
+                PUBLIC "${PROJECT_BINARY_DIR}/inc/"
+            )
+            if(ENABLE_SAMPLE_ADDER_INSTALL)
+                install(TARGETS sampleadder
+                    DESTINATION lib)
+                install(FILES sampleadder.h
+                    DESTINATION include)
+            endif()
+        endif()
+    endif()
+
+The change is in the code snippet that was added as below.
+
+            if(ENABLE_SAMPLE_ADDER_INSTALL)
+                install(TARGETS sampleadder
+                    DESTINATION lib)
+                install(FILES sampleadder.h
+                    DESTINATION include)
+            endif()
+
+The first `install` command prepares cmake to copy the library files to the system `lib` folder.  The second `install` command prepares cmake to copy the library header include files to the system `include` folder.
+
+As mentioned earlier, similar changes can be seen for `samplecombinatorics` library.
+
+### Runtime Executable Install Commands
+In the `./CMakeLists.txt`, after the `target_link_libraries` command, the following code was added for installation purposes.
+
+    if(ENABLE_PROJECT_INSTALL)
+        install(TARGETS ${PROJECT_NAME}
+            DESTINATION bin)
+        install(FILES "${PROJECT_BINARY_DIR}/inc/config.h"
+            DESTINATION include)
+
+    endif()
+
+This code is activated only when the `ENABLE_PROJECT_INSTALL` option is turned on.  The first `install` command prepares cmake to copy the executable with the project name to the system `bin` folder.  The second `install` command prepares cmake to copy the `config.h` file to the system `include` folder.
+
+### Script Change in `./scripts/configure.sh`
+The script had the following CMake command.
+
+    cmake -S $ROOTDIR -B $BUILDDIR -DENABLE_SAMPLE_BUILD=ON -DENABLE_SAMPLE_ADDER_BUILD=ON -DENABLE_SAMPLE_COMBINATORICS_BUILD=ON
+
+It got updated to turn the install options `ON` as follows.
+
+    cmake -S $ROOTDIR -B $BUILDDIR -DENABLE_SAMPLE_BUILD=ON -DENABLE_SAMPLE_ADDER_BUILD=ON -DENABLE_SAMPLE_COMBINATORICS_BUILD=ON -DENABLE_SAMPLE_ADDER_INSTALL=ON -DENABLE_SAMPLE_COMBINATORICS_INSTALL=ON -DENABLE_PROJECT_INSTALL=ON
+
+### Final Installation with `./scripts/install.sh`
+The `./scripts/build.sh` command only builds the project.  But, once the build process is complete, it leaves `cmake_install.cmake` folders where installation code was found.  These files are activated by `cmake -P` command.  This command is added in a new file called `./scripts/install.sh`, which is shown below.
+
+    #!/bin/bash
+    # This script installs the project
+
+    source include.sh
+
+    cd $BUILDDIR/
+    sudo cmake -P cmake_install.cmake
+    cd $ROOTDIR/
+
+The `sudo` is needed as this command accesses folders which require root permissions.  So, only a system administrator can run this command.
